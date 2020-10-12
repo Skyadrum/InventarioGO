@@ -1,17 +1,19 @@
 package main
 
 import (
-	"net/http"
+	"InventarioGO/database"
+	"fmt"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
-	r := chi.NewRouter()
-	r.Use(middleware.Logger)
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("welcome"))
-	})
-	http.ListenAndServe(":3000", r)
+
+	databaseConnection := database.DbConnection()
+
+	//Logica
+
+	defer databaseConnection.Close()
+	fmt.Println(databaseConnection)
+
 }
